@@ -1,3 +1,215 @@
+/* Fonts Definition*/
+@font-face {
+  font-family: "AvenirNext-Regular";
+  src: url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Regular.eot?#iefix") format("embedded-opentype"), url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Regular.woff2") format("woff2"), url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Regular.woff") format("woff"), url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "AvenirNext-DemiBold";
+  src: url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Demi.eot?#iefix") format("embedded-opentype"), url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Demi.woff2") format("woff2"), url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Demi.woff") format("woff"), url("https://images.mint.com/web-client/fonts/AvenirNextLTW04-Demi.ttf") format("truetype");
+}
+/* CSS Definitions*/
 html, body{
-	background: green;
+	height: 100%;
+	/*background-color: yellow;*/
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.container{
+	height: 100%;
+	width: 800px;
+	margin: auto;
+	padding: 0;
+	border: 0;
+	/*background-color: rgb(232,232,232);*/
+	display: block;
+}
+header{
+	width: 100%;
+	padding: 58px 0 5px 0;
+	/*background-color: orange;*/
+	display: block;
+	position: relative;
+}
+section{
+	width: 798px;
+	height: 715px;
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	/*box-shadow: 0 0 7px rgb(232,232,232);*/
+	box-shadow: 0 0 7px rgb(200,200,200);
+	display: block;
+}
+footer{
+	width: 100%;
+	height: 140px;
+	/*background-color: rgb(220,240,220);*/
+	margin-top: 40px;
+	margin-bottom: 100px;
+}
+.link_right{
+	float: right;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	bottom: 15px;
+	right: 5px;
+}
+p, a{
+	display: inline;
+	text-decoration:none;
+}
+.text_regular{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
+	text-decoration-color: rgb(51,51,51);
+	color: rgb(51,51,51);
+}
+.text_bold{
+	font-family: "AvenirNext-DemiBold", Fallback, sans-serif;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 700;
+	text-decoration-color: rgb(51,51,51);
+	color: rgb(51,51,51);
+}
+.r_aside{
+	float: right;
+	padding-left: 39px;
+	margin-top: 43px;
+	border-left: 1px solid rgb(200,200,200);
+}
+aside{
+	float: right;
+	height: 580px;
+	width: 197px;
+	background-color: rgb(245,245,245);
+
+	margin-right: 33px;
+}
+form{
+	float: left;
+	width: 400px;
+	padding: 20px 50px 50px 50px;
+	margin: 0;
+}
+input, label{
+	display: block;
+}
+.checkbox{
+	display: inline-block;
+	/*padding-bottom: 6px;*/
+	margin-bottom: 10px;
+	width: 19px;
+	height: 19px;
+	line-height: 21px;
+	/*transform:scale(1.3, 1.3);*/
+}
+.checkbox_text{
+	display: inline-block;
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgb(51,51,51);
+	padding-bottom: 6px;
+	margin-bottom: 10px;
+}
+h3{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 30px;
+	font-weight: 100;
+	color: rgb(51,51,51);
+	margin-bottom: 40px;
+}
+label{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgb(51,51,51);
+	padding-bottom: 6px;
+	margin-bottom: 10px;
+}
+input{
+	width: 304px;
+	height: 32px;
+	margin-bottom:25px;
+	color: rgb(51,51,51);
+}
+.button{
+	display: block;
+	width: 94px;
+	height: 34px;
+	background-color: RGB(69,202,230);
+	border-radius: 2px;
+	border-style: none;
+	border-color: RGB(255,255,255);
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 13,5px;
+	font-weight: 400;
+	color: rgb(255,255,255);
+	margin-bottom: 10px;
+}
+.note{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	color: RGB(125,127,128);
+}
+
+.note_link {
+	text-decoration-color: rgb(69,202,230);
+	color: rgb(69,202,230);
+}
+h4{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 20px;
+	font-weight: 500;
+	color: rgb(102,102,102);
+	padding-left: 20px;
+	padding-top: 23px;
+	padding-bottom: 5px;
+	margin: 0;
+}
+ul{
+	margin: 0;
+	padding: 0;
+}
+li{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	color: rgb(102,102,102);
+	text-decoration-color: rgb(102,102,102);
+	margin: 0 0 0 30px;
+	padding: 0 25px 15px 0;
+}
+.li_link{
+	text-decoration-color: rgb(102,102,102);
+	color: rgb(102,102,102);
+	text-decoration: underline;
+}
+.footer_links{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgb(165,165,165);
+	text-decoration-color: rgb(165,165,165);
+	padding: 0 20px 0 20px;
+}
+.footer_links:hover{
+	text-decoration: underline;
+}
+.footer_separator{
+	font-family: "AvenirNext-Regular", Fallback, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgb(165,165,165);	
+}
+.footer_logos{
+	display: block;
+	margin: auto;
+	padding: 25px 0 25px 0;
 }

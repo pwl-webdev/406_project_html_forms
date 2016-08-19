@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link type="text/css" rel=stylesheet href="styles/syle.css"
+	<link rel="stylesheet" href="styles/style.css">
 	<title></title>
 </head>
 <body>
-
+	<div class="container">
+		<header>
+			<a href="http://mint.com"><img src="images/mint_logo.png"></a>
+			<div class="link_right">
+				<a class="text_bold" href="http://mint.com"> Sign up </a>
+				<p class="text_regular">&nbsp|&nbsp</p>
+				<a class="text_regular" href="http://mint.com"> Log in </a>
+			</div>
+		</header><!--
+		--><section>
+			<div class="r_aside">
+				<aside>
+					<h4>Why you'll love it</h4>
+					<ul>
+						<li>See all your accounts in one place</li>
+						<li>Set a budget and pay down your debt</li>
+						<li>Find the best ways to grow your money</li>
+						<li>Stay <a class="li_link" href="http://mint.com">safe and secure</a></li>
+					</ul>
+				</aside>
+			</div>
+				<form action="/signup" method="post">
+					<h3> See all your finances in one place & create a budget </h3>
+					<label for="email">Your email</label>
+					<input type="email" name="email" id="email">
+					<label for="confirm_email">Confirm email</label>
+					<input type="email" name="confirm_email" id="confirm_email">
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password">
+					<label for="confirm_password">Confirm Password</label>
+					<input type="password" name="confirm_password" id="confirm_password">	
+					<input class="checkbox" type="checkbox" name="remeber_me" value="Remember me"><p class="checkbox_text">Remember me</p>
+					<input class="button" type="submit" name="submit" value="SIGN UP">
+					<p class="note">By clicking Sign Up you agree to our <a class="note_link"href="http://mint.com">Terms of Use</a> and <a class="note_link" href="http://mint.com">Privacy Statement</a></p>		
+				</form>
+		</section>
+		<footer>
+			<a class="footer_links" href="http://mint.com">Support Community</a>
+			<p class="footer_separator">|<p>
+			<a class="footer_links" href="http://mint.com">Terms of Use</a>
+			<p class="footer_separator">|</p>
+			<a class="footer_links" href="http://mint.com">Privacy</a>
+			<p class="footer_separator">|</p>
+			<a class="footer_links" href="http://mint.com">Legal and Trademark Notices</a>
+			<p class="footer_separator">|</p>
+			<a class="footer_links" href="http://mint.com">About Intuit</a>
+			<img class="footer_logos" src="images/footer_logos.png">
+		</footer>
+	</div>
 </body>
 </html>

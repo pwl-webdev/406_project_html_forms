@@ -1,0 +1,231 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="ius-session" content="2CDB14F98F9A442E88BAA97F701D2780">
+	<script type="text/javascript" src="xdr_data/ius.js"></script>
+	
+	
+	
+	<script type="text/javascript">
+    var intuitFlowId = '';
+    var xhr2Enabled = 'XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest();
+    var postMessageEnabled = 'postMessage' in window;
+    var xdrReady = null;
+    var receiveMessage = null;
+    var jQueryEnabledInParent = window.location.search.indexOf('nojQuery') === -1; // query param is not there, means jQuery is enabled
+    var isV2 = window.location.search.indexOf('v2') !== -1; // v1 query param there means it's v1
+    var corsEnabledInParent = window.location.search.indexOf('corsEnabled') !== -1;
+    var metaSessionId = $ ? $("meta[name='ius-session']").attr('content') : '';
+    var enableCORS = corsEnabledInParent;
+    var logger = null;
+    try {
+      logger = parent && parent.intuit && parent.intuit.ius && parent.intuit.ius.logger ? parent.intuit.ius.logger : null;  
+    } catch (err) {
+
+    }
+    
+		
+		var getSessionId = function() {
+			var _sessionId = '';
+			try {
+				if($ && $.cookie) {
+					_sessionId = $.cookie('ius_session');
+				}
+				
+				if(!_sessionId) {
+					_sessionId = metaSessionId || "2CDB14F98F9A442E88BAA97F701D2780";
+				}	
+			} catch(err) {
+				
+			}			
+			
+			return _sessionId;
+		}
+		
+		var receiveMessage = function(event) {
+			var data = event.data ? event.data : event.message;
+			if (data && data.indexOf("doProfiling=") != -1) {
+				var metaDataStr = data.split("=")[1];
+				if(metaDataStr) {
+					var obj = JSON.parse(metaDataStr);
+					rsProfiling(obj.offeringId, obj.eventType);
+				} else {
+					rsProfiling(); // rsProfiling should be in scope since parent will only post after the xdrReady postMessage from this frame	
+				}			  
+		  	}
+		};
+		
+		var doCORS = enableCORS && isV2 && jQueryEnabledInParent && xhr2Enabled && postMessageEnabled;
+		
+		if(doCORS) {
+			xdrReady = function() {
+				if(parent) {
+					// this is a harmless message, thus wildcard allow origin
+					parent.postMessage("xdrIframeLoaded", "*");
+				}
+			};
+			
+			if (window.addEventListener) {
+				window.addEventListener("message", receiveMessage, false);
+		    } else if (window.attachEvent) {
+		    	window.attachEvent("onmessage", receiveMessage);
+		    }
+				
+		} else {
+		
+			if(typeof iusDomainResolver !== 'undefined' && iusDomainResolver) {
+				var tld = iusDomainResolver();
+				if(tld) document.domain = tld;
+			} else {
+				document.domain = "intuit.com";
+			}
+			
+			xdrReady = function() {
+				if(parent.intuit && parent.intuit.ius) {
+					parent.intuit.ius.xdrIframeLoaded(false);	
+				}
+			};
+			
+			function request (options, done, fail) {
+				var beforeSend = null;
+				
+				var url = options.url;
+				if(!url.match(/^\/(ius_proxy|iamticketsclient|access_client|oauth2|oauth1|op|chart)/)) {
+					throw new Error("unexcepted url - " + url);
+				}
+				
+				if(options.beforeSend) {
+					beforeSend = options.beforeSend;		
+				}
+				
+				options.beforeSend = function(xhr) {
+					var sessionId = getSessionId();
+					
+					if(sessionId) {
+						xhr.setRequestHeader('intuit_sessionid', sessionId);
+					}
+					
+					var visitorId = $.cookie('ivid');
+					if(visitorId) {
+						xhr.setRequestHeader('intuit_visitorid', visitorId);
+					}
+
+					var oVisitorId = $.cookie('s_vi');
+					if(oVisitorId) {
+						xhr.setRequestHeader('intuit_ovid', oVisitorId);
+					}
+					
+					var riskProfilingData = $("#ius-rs-info").val();
+					if(riskProfilingData) {
+						xhr.setRequestHeader('intuit_risk_profiling_data', riskProfilingData);
+					}
+					
+					// first, take care of checking intuit.ius.urlParams['flow_id']
+					if(parent.intuit && parent.intuit.ius && parent.intuit.ius.flowId) {
+						xhr.setRequestHeader('intuit_flowid', parent.intuit.ius.flowId);
+					} else if(intuitFlowId) {
+						xhr.setRequestHeader('intuit_flowid', intuitFlowId);
+					}
+					
+					if(beforeSend) {
+						beforeSend(xhr);
+					}
+				};
+				
+				options.headers = {
+			    	Accept : 'application/json; charset=utf-8'
+			    }
+							
+				$.ajax(options)
+				 .done(function(data, textStatus, jqXHR) {
+					 intuitFlowId = jqXHR.getResponseHeader('intuit_flowid');
+					 
+					 if(parent.intuit && parent.intuit.ius && intuitFlowId) {
+						parent.intuit.ius.flowId = intuitFlowId;	 
+					 }
+					 
+					 if(done) { 
+						 done(data, textStatus, jqXHR);
+					 }					 
+				  })
+				 .fail(function(response) {
+					 // hack: IE 7 sees PUT that responses with 204 as 0
+					if($.browser.msie  && parseInt($.browser.version, 10) === 7 && response.status === 0) {
+						if(done) done(response);
+						return;
+					}
+				 	if (fail) fail(response);
+				 });
+			}
+		}		
+	</script>
+</head>
+<body>
+	<script type="text/javascript">
+		try {
+			if(logger) {
+				window.onerror = function xdrErrorHandler(err, url, lineNumber) {
+					var parentWindow = parent.window;
+					var parentUrl = '';
+					if(parentWindow) { parentUrl = parentWindow.location.href; }
+					logger.log(err, null ,'xdr lineNumber=' + lineNumber + ' parentUrl=' + parentUrl);
+				}
+			}
+		}catch(err) {
+			// fail silently
+		}
+	</script>
+
+	
+	
+		
+				
+					
+					
+					
+					
+						<script>
+							var rsProfiling = function(){}
+						</script>
+						<iframe id="tm_frame" title="" src="xdr_data/tags.html"></iframe>
+					
+						
+		
+	
+
+	<script type="text/javascript">
+		$(function() {
+			var reProfilingInterval = parseInt('43200000') || 43200000; //12 * 60 * 60  * 1000 =  12 hours in ms
+
+			var offeringId = '';
+
+			try {
+				offeringId = parent && parent.intuit && parent.intuit.ius && parent.intuit.ius.offeringId ? parent.intuit.ius.offeringId : null;
+			} catch(err) {
+				// ignore failure
+			}
+
+			setInterval(function() {
+
+				$("#tm_frame").attr("src", $("#tm_frame").attr("src")); // reload iframe
+
+				if(logger) {
+					logger.logMessage("Re-profiling device", offeringId, "xdr.html");
+				}
+			}, reProfilingInterval);
+		});
+	</script>
+
+	
+	
+		
+		
+			<script>
+				xdrReady();
+			</script>	
+		
+	
+	
+	
+
+
+</body></html>
