@@ -135,7 +135,7 @@ label{
 input{
 	width: 304px;
 	height: 32px;
-	margin-bottom:25px;
+	/*margin-bottom:25px;*/
 	color: rgb(51,51,51);
 }
 .button{
@@ -212,4 +212,40 @@ li{
 	display: block;
 	margin: auto;
 	padding: 25px 0 25px 0;
+}
+.form_field_container{
+	height: 61px;
+	position: relative;
+}
+/* Styling form validation labels*/
+#confirm_password-error, #email-error, #confirm_email-error, #password-error{
+	color: #f24965;
+	font-size: 12px;
+	margin: 5px 0;
+}
+.error input{
+	border: 1px solid #f24965;
+	border-radius: 3px;
+}
+.form_warning{
+	position: absolute;
+	right: 90px;
+	top: 5px;
+	background: url("../images/form-ajax-iam.png") no-repeat scroll 4px 7px transparent;
+	width: 29px;
+	height: 32px;
+	visibility: hidden;
+}
+#password_form_warning{
+	background: url("../images/icon-lock_open-gray2.svg") 0 50%/35px 17px no-repeat;
+	width: 33px;
+	height: 32px;
+	top: 2px;
+	visibility: visible;
+}
+.error .form_warning{
+	visibility: visible;
+}
+.error #password_form_warning{
+	background: url("../images/icon-lock_open-red1.svg") 0 50%/35px 17px no-repeat;	
 }

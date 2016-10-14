@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="styles/style.css">
-	<title></title>
+	<script src="scripts/jquery-3.1.0.js"></script>
+	<script src="scripts/jquery.validate.js"></script>
+	<script src="scripts/html_forms.js"></script>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<title>Mint > Start Here</title>
 </head>
 <body>
 	<div class="container">
@@ -26,16 +31,28 @@
 					</ul>
 				</aside>
 			</div>
-				<form action="/signup" method="post">
+				<form id="signup_form" action="/signup" method="post">
 					<h3> See all your finances in one place & create a budget </h3>
 					<label for="email">Your email</label>
-					<input type="email" name="email" id="email">
+					<div class="form_field_container">
+						<input type="email" name="email" id="email">
+						<span class="form_warning"></span>
+					</div>
 					<label for="confirm_email">Confirm email</label>
-					<input type="email" name="confirm_email" id="confirm_email">
+					<div class="form_field_container">
+						<input type="email" name="confirm_email" id="confirm_email">
+						<span class="form_warning"></span>
+					</div>
 					<label for="password">Password</label>
-					<input type="password" name="password" id="password">
+					<div class="form_field_container">
+						<input type="password" name="password" id="password">
+						<span  id="password_form_warning" class="form_warning error"></span>
+					</div>
 					<label for="confirm_password">Confirm Password</label>
-					<input type="password" name="confirm_password" id="confirm_password">	
+					<div class="form_field_container">
+						<input type="password" name="confirm_password" id="confirm_password">
+						<span class="form_warning"></span>
+					</div>
 					<input class="checkbox" type="checkbox" name="remeber_me" value="Remember me"><p class="checkbox_text">Remember me</p>
 					<input class="button" type="submit" name="submit" value="SIGN UP">
 					<p class="note">By clicking Sign Up you agree to our <a class="note_link"href="http://mint.com">Terms of Use</a> and <a class="note_link" href="http://mint.com">Privacy Statement</a></p>		
